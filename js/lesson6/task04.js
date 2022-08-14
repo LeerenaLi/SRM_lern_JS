@@ -1,4 +1,4 @@
-const allCashbox = [
+const allCashbox1 = [
     [12, 4500], 
     [7, 3210], 
     [4, 650], 
@@ -25,4 +25,4 @@ const allCashbox = [
     
   }
 
-  console.log(getAveragePriceGoods(allCashbox));
+  console.log(getAveragePriceGoods(allCashbox1));
