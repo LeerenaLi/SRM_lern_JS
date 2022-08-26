@@ -11,28 +11,27 @@
 // если пользователь нажимает “Отмена”, то игра заканчивается.
 
 {
-let hiddenNum = Math.floor(Math.random() * 100);
-let userNum;
+    const hiddenNum = Math.floor(Math.random() * 100);
+    let userNum;
 
-console.log(hiddenNum);
+    console.log(hiddenNum);
 
 
-while(userNum = prompt('Угадай число от 1 до 100')) {
-    if(isNaN(userNum)) 
-        alert('Введите число');  
-    else if(userNum > hiddenNum)
-        alert('Меньше! Введи новый вариант');
-    else if(userNum < hiddenNum)
-        alert('Больше! Введи новый вариант');
-    else if(userNum == hiddenNum) {
-        alert('Правильно!');
-        break;
+    while (userNum = prompt('Угадай число от 1 до 100')) {
+        if (isNaN(userNum)) {
+            alert('Введите число');
+        } else if (userNum > hiddenNum) {
+            alert('Меньше! Введи новый вариант');
+        } else if (userNum < hiddenNum) {
+            alert('Больше! Введи новый вариант');
+        } else if (userNum == hiddenNum) {
+            alert('Правильно!');
+            break;
+        } else if (userNum == null || userNum == '') {
+            break;
+        }
     }
-    else if(userNum == null || userNum == "") {
-        break;
-    }
-}
 
 
-console.log(userNum);
+    console.log(userNum);
 }
