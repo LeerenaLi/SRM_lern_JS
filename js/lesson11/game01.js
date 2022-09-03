@@ -35,10 +35,12 @@ const bot = (userNum, hiddenNum) => {
     if (userNum > hiddenNum) {
         alert('Меньше! Введи новый вариант');
         return bot(userNum = +prompt('Угадай число от 1 до 100'), hiddenNum);
-    } else if (userNum < hiddenNum) {
+    }
+    if (userNum < hiddenNum) {
         alert('Больше! Введи новый вариант');
         return bot(userNum = +prompt('Угадай число от 1 до 100'), hiddenNum);
-    } else if (userNum === hiddenNum) {
+    }
+    if (userNum === hiddenNum) {
         alert('Правильно!');
         return hiddenNum;
     }
