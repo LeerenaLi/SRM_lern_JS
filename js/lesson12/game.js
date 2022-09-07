@@ -87,10 +87,7 @@
                     Очки:
                     Вы: ${result.player}
                     Компьютер: ${result.computer}`);
-                }
-                if (userIndex === 0 && computerIndex === 2 ||
-                    userIndex === 1 && computerIndex === 0 ||
-                    userIndex === 2 && computerIndex === 1) {
+                } else {
                     result.player += 0;
                     result.computer += 1;
                     alert(`Вы: ${userChoise} | Компьютер: ${computerChoise}
