@@ -23,22 +23,47 @@
 // то игра продолжается дальше сохраняя прежние очки
 
 (() => {
-    const lang = ['камень', 'ножницы', 'бумага'];
+    const figuresEng = ['rock', 'scissors', 'paper'];
+    const figuresRu = ['камень', 'ножницы', 'бумага'];
 
 
-    const game = () => {
+    const game = (language) => {
         const result = {
             player: 0,
             computer: 0,
         };
 
+        const lang = language === 'ENG' || language === 'EN' ?
+            figuresEng : figuresRu;
+
+        const exitRu = 'Вы точно хотите выйти? да/нет';
+        const exitEn = 'You want to end the game?';
+        const exitLang = lang === figuresEng ? exitEn : exitRu;
+
+        const totalRu = 'Результат:';
+        const totalEn = 'Total:';
+        const total = lang === figuresEng ? totalEn : totalRu;
+
+        const youRu = 'Вы:';
+        const youEn = 'You:';
+        const you = lang === figuresEng ? youEn : youRu;
+
+        const compRu = 'Компьютер:';
+        const compEn = 'Computer:';
+        const comp = lang === figuresEng ? compEn : compRu;
+
+        const correctRu = 'Введите корректные данные';
+        const correctEn = 'Enter correct data';
+        const correct = lang === figuresEng ? correctEn : correctRu;
+
+
         const startGame = () => {
             const answer = prompt(`${lang.join(', ')} ?`);
             if (answer === null) {
-                const exit = confirm(`Вы точно хотите выйти? да/нет`);
+                const exit = confirm(`${exitLang}`);
                 if (exit === true) {
-                    alert(`Результат:
-                    Вы: ${result.player} Компьютер: ${result.computer}`);
+                    alert(`${total} 
+                    ${you} ${result.player} ${comp} ${result.computer}`);
                     result.player = false;
                     result.computer = false;
                     console.log(result.player);
@@ -52,7 +77,7 @@
             const userIndex = lang.indexOf(answer.toLowerCase());
 
             if (userIndex === -1) {
-                alert('Введите корректные данные');
+                alert(`${correct}`);
                 startGame();
             }
             console.log(userIndex);
@@ -73,119 +98,35 @@
                 if (userIndex === computerIndex) {
                     result.player += 1;
                     result.computer += 1;
-                    alert(`Вы: ${userChoise} | Компьютер: ${computerChoise}
-                    Очки:
-                    Вы: ${result.player}
-                    Компьютер: ${result.computer}`);
+                    alert(`${you} ${userChoise} | ${comp} ${computerChoise}
+                    ${total}
+                    ${you} ${result.player}
+                    ${comp} ${result.computer}`);
                 }
                 if (userIndex === 0 && computerIndex === 1 ||
                     userIndex === 1 && computerIndex === 2 ||
                     userIndex === 2 && computerIndex === 0) {
                     result.player += 1;
                     result.computer += 0;
-                    alert(`Вы: ${userChoise} | Компьютер: ${computerChoise}
-                    Очки:
-                    Вы: ${result.player}
-                    Компьютер: ${result.computer}`);
+                    alert(`${you} ${userChoise} | ${comp} ${computerChoise}
+                    ${total}
+                    ${you} ${result.player}
+                    ${comp} ${result.computer}`);
                 } else {
                     result.player += 0;
                     result.computer += 1;
-                    alert(`Вы: ${userChoise} | Компьютер: ${computerChoise}
-                    Очки:
-                    Вы: ${result.player}
-                    Компьютер: ${result.computer}`);
+                    alert(`${you} ${userChoise} | ${comp} ${computerChoise}
+                    ${total}
+                    ${you} ${result.player}
+                    ${comp} ${result.computer}`);
                 }
                 startGame();
                 findChampion();
             };
             findChampion();
-
-            // let userIndex;
-
-            // if (lang[0].indexOf(answer.toLocaleLowerCase()) === 0) {
-            //     userIndex = 0;
-            // }
-            // if (lang[1].indexOf(answer.toLocaleLowerCase()) === 0) {
-            //     userIndex = 1;
-            // }
-            // if (lang[2].indexOf(answer.toLocaleLowerCase()) === 0) {
-            //     userIndex = 2;
-            // }
-            // // if (lang.indexOf(answer.toLowerCase()) === -1) {
-            // //     startGame();
-            // // }
-            // console.log(userIndex);
-
-            // const findAnswer = (arr, n) => {
-            //     // не понимаю, как здесь сделать рекурсию а не цикл
-            //     for (let i = 0; i < arr.length; ++i) {
-            //         if (arr[i].indexOf(n) === 0) {
-            //             return arr[i];
-            //         }
-            //     }
-            //     return false;
-            // };
-
-            // const userChoise = findAnswer(lang, answer.toLowerCase());
-            // console.log(userChoise);
-
-            // const findComputerAnswer = (arr, hiddenNum) => {
-            //     if (hiddenNum === 0) {
-            //         return arr[0];
-            //     }
-            //     if (hiddenNum === 1) {
-            //         return arr[1];
-            //     }
-            //     if (hiddenNum === 2) {
-            //         return arr[2];
-            //     }
-            // };
-
-            // const computerChoise =
-            // findComputerAnswer(lang, Math.floor(Math.random() * 3));
-            // console.log(computerChoise);
-
-            // const findChampion = () => {
-            //     if (result.player === false && result.computer === false) {
-            //         return;
-            //     }
-            //     if (userChoise === computerChoise) {
-            //         result.player += 1;
-            //         result.computer += 1;
-            //         alert(`Вы: ${userChoise} | Компьютер: ${computerChoise}
-            //         Очки:
-            //         Вы: ${result.player}
-            //         Компьютер: ${result.computer}`);
-            //     }
-            //     if (userChoise === 'камень' && computerChoise === 'ножницы' ||
-            //         userChoise === 'ножницы' && computerChoise === 'бумага' ||
-            //         userChoise === 'бумага' && computerChoise === 'камень') {
-            //         result.player += 1;
-            //         result.computer += 0;
-            //         alert(`Вы: ${userChoise} | Компьютер: ${computerChoise}
-            //         Очки:
-            //         Вы: ${result.player}
-            //         Компьютер: ${result.computer}`);
-            //     }
-            //     if (userChoise === 'камень' && computerChoise === 'бумага' ||
-            //         userChoise === 'ножницы' && computerChoise === 'камень' ||
-            //         userChoise === 'бумага' && computerChoise === 'ножницы') {
-            //         result.player += 0;
-            //         result.computer += 1;
-            //         alert(`Вы: ${userChoise} | Компьютер: ${computerChoise}
-            //         Очки:
-            //         Вы: ${result.player}
-            //         Компьютер: ${result.computer}`);
-            //     }
-            //     startGame();
-            //     findChampion();
-            // };
-            // findChampion();
         };
         return startGame();
     };
-
-    // game();
 
     window.newGame = game;
 })();
