@@ -36,34 +36,32 @@
         const lang = language === 'ENG' || language === 'EN' ?
             figuresEng : figuresRu;
 
-        const exitRu = 'Вы точно хотите выйти? да/нет';
-        const exitEn = 'You want to end the game?';
-        const exitLang = lang === figuresEng ? exitEn : exitRu;
+        const wordsEn = {
+            exit: 'You want to end the game?',
+            total: 'Total:',
+            you: 'You:',
+            comp: 'Computer:',
+            correct: 'Enter correct data',
+        };
 
-        const totalRu = 'Результат:';
-        const totalEn = 'Total:';
-        const total = lang === figuresEng ? totalEn : totalRu;
+        const wordRu = {
+            exit: 'Вы точно хотите выйти? да/нет',
+            total: 'Результат:',
+            you: 'Вы:',
+            comp: 'Компьютер:',
+            correct: 'Введите корректные данные',
+        };
 
-        const youRu = 'Вы:';
-        const youEn = 'You:';
-        const you = lang === figuresEng ? youEn : youRu;
-
-        const compRu = 'Компьютер:';
-        const compEn = 'Computer:';
-        const comp = lang === figuresEng ? compEn : compRu;
-
-        const correctRu = 'Введите корректные данные';
-        const correctEn = 'Enter correct data';
-        const correct = lang === figuresEng ? correctEn : correctRu;
-
+        const word = lang === figuresEng ? wordsEn : wordRu;
 
         const startGame = () => {
             const answer = prompt(`${lang.join(', ')} ?`);
             if (answer === null) {
-                const exit = confirm(`${exitLang}`);
+                const exit = confirm(`${word.exit}`);
                 if (exit === true) {
-                    alert(`${total} 
-                    ${you} ${result.player} ${comp} ${result.computer}`);
+                    alert(`${word.total} 
+                    ${word.you} ${result.player} 
+                    ${word.comp} ${result.computer}`);
                     result.player = false;
                     result.computer = false;
                     console.log(result.player);
@@ -77,7 +75,7 @@
             const userIndex = lang.indexOf(answer.toLowerCase());
 
             if (userIndex === -1) {
-                alert(`${correct}`);
+                alert(`${word.correct}`);
                 startGame();
             }
             console.log(userIndex);
@@ -98,27 +96,30 @@
                 if (userIndex === computerIndex) {
                     result.player += 1;
                     result.computer += 1;
-                    alert(`${you} ${userChoise} | ${comp} ${computerChoise}
-                    ${total}
-                    ${you} ${result.player}
-                    ${comp} ${result.computer}`);
+                    alert(`${word.you} ${userChoise}
+                    ${word.comp} ${computerChoise}
+                    ${word.total}
+                    ${word.you} ${result.player}
+                    ${word.comp} ${result.computer}`);
                 }
                 if (userIndex === 0 && computerIndex === 1 ||
                     userIndex === 1 && computerIndex === 2 ||
                     userIndex === 2 && computerIndex === 0) {
                     result.player += 1;
                     result.computer += 0;
-                    alert(`${you} ${userChoise} | ${comp} ${computerChoise}
-                    ${total}
-                    ${you} ${result.player}
-                    ${comp} ${result.computer}`);
+                    alert(`${word.you} ${userChoise}
+                    ${word.comp} ${computerChoise}
+                    ${word.total}
+                    ${word.you} ${result.player}
+                    ${word.comp} ${result.computer}`);
                 } else {
                     result.player += 0;
                     result.computer += 1;
-                    alert(`${you} ${userChoise} | ${comp} ${computerChoise}
-                    ${total}
-                    ${you} ${result.player}
-                    ${comp} ${result.computer}`);
+                    alert(`${word.you} ${userChoise}
+                    ${word.comp} ${computerChoise}
+                    ${word.total}
+                    ${word.you} ${result.player}
+                    ${word.comp} ${result.computer}`);
                 }
                 startGame();
                 findChampion();
