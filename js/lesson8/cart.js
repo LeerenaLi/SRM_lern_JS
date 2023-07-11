@@ -1,97 +1,85 @@
 'use strict';
 
-// Объект будет содержать следующие свойства:
-
-// items = пустой массив - это товары
-// totalPrice = 0 - общая стоимость корзины
-// count = 0 - количество товаров
-
-// и методы
-
-// getTotalPrice - получить общую стоимость товаров
-// метод возвращает значение свойства totalPrice
-
-// add - добавить товар
-// Принимает три параметра:
-// название товара
-// цену товара
-// количество товара (опциональный параметр, по умолчанию 1 товар)
-// этот метод формирует объект из полученных параметров и добавляет его в свойство items
-// так же вызывает все необходимые методы чтобы свойства count и totalPrice были актуальные
-
-// increaseCount - увеличить количество товаров
-// Принимает один параметр(число)
-// Увеличивает свойство count на это число
-
-// calculateItemPrice - посчитать общую стоимость товаров
-// пересчитывает стоимость всей корзины и записывает значение в totalPrice 
-
-// clear - очистить корзину
-// Очищает полностью нашу корзину, возвращает все значения в изначальные
-
-// print - распечатать корзину
-// Выводит в консоль JSON строку из массива items и на следующей строке выводит общую стоимость корзины
-
-// let num = 0;
-
-const cart = {
-    items: [],
-    totalPrice: 0,
-    count: 0,
-    getTotalPrice()  {
-        cart.calculateItemPrice();
-        return this.totalPrice;
-    },
-    add(productName = '', productPrice, productQuantity = 1) {
-        const product = {
-            productName: productName,
-            productPrice: productPrice,
-            productQuantity: productQuantity,
-        };
-        cart.items.push(product);
-        // cart.calculateItemPrice();
-        cart.getTotalPrice();
-        cart.increaseCount(0);
-    },
-    increaseCount(num) {
-        cart.items.reduce((totalCount, currentCount) => {
-            totalCount = totalCount + currentCount.productQuantity;
-            this.count = totalCount;
-            return this.count;
-        },0);
-
-        return this.count += num;
-    },
-    calculateItemPrice() {
-        cart.items.reduce((total, currentItem) => {
-            total = total + currentItem.productPrice * currentItem.productQuantity;
-            this.totalPrice = total;
-            return this.totalPrice;
-        },0); 
-    },
-    clear() {
-        while(cart.items.length > 0) {
-            cart.items.pop();
-            this.totalPrice = 0;
-            this.count = 0;
-        }
-    },
-    print1() {
-        const itemsStr = JSON.stringify(this.items);
-        console.log(itemsStr);
-        console.log(`Общая стоимость товаров: ${cart.totalPrice} руб.`);
-    },
+const Cart = function(goods = []) {
+    this.goods = goods;
+    this.totalPrice = 0;
+    this.count = 0;
 }
 
-cart.add('one', 100, 2);
-cart.add('two', 200, 1);
-cart.add('three', 500, 1);
+Cart.prototype.getTotalPrice = function () {
+    this.calculateGoodsPrice();
+    return this.totalPrice;
+}
 
-// cart.clear();
-console.log(cart.items);
+Cart.prototype.addGoods = function (product) {
+    this.goods.push(product);
+    this.getTotalPrice();
+    this.increaseCount();
+}
 
-// console.log(cart.totalPrice);
+Cart.prototype.increaseCount = function () {
+    this.count += 1;
+    return this.count;
+}
 
-// console.log(cart.count);
+Cart.prototype.calculateGoodsPrice = function () {
+    this.goods.reduce((total, currentItem) => {
+        total += currentItem.productPrice - Math.floor(currentItem.productPrice / 100 * currentItem.discount);
+        this.totalPrice = total;
+        return this.totalPrice;
+    },0); 
+}
 
-cart.print1();
+Cart.prototype.clear = function () {
+    while(this.goods.length > 0) {
+        this.goods.pop();
+        this.totalPrice = 0;
+        this.count = 0;
+    }
+}
+
+Cart.prototype.print = function () {
+    const itemsStr = JSON.stringify(this.goods);
+    console.log(itemsStr);
+    console.log(`Общая стоимость товаров: ${this.totalPrice} руб.`);
+}
+
+
+
+const Goods = function (productName = '', productPrice, discount = 0) {
+    this.productName = productName;
+    this.productPrice = productPrice;
+    this.discount = discount;
+}
+
+const FoodGoods = function (productName, productPrice, discount, calories) {
+    Goods.call(this, productName, productPrice, discount);
+    this.calories = calories;
+}
+
+const СlothingGoods = function (productName, productPrice, discount, material = '') {
+    Goods.call(this, productName, productPrice, discount);
+    this.material = material;
+}
+
+const TechnicsGoods = function (productName, productPrice, discount, typeTechnics = '') {
+    Goods.call(this, productName, productPrice, discount);
+    this.typeTechnics = typeTechnics;
+}
+
+const kettle = new Goods('Electric kettle Tefal', 3500, 2);
+
+const apples = new FoodGoods('apples', 150, 5, 47);
+
+const dress = new СlothingGoods('Dress red', 2500, 0, 'cotton');
+
+const notebook = new TechnicsGoods('notebook Dell', 88000, 3, 'notebook');
+
+const cart = new Cart();
+cart.addGoods(kettle);
+cart.addGoods(apples);
+cart.addGoods(dress);
+cart.addGoods(notebook);
+
+console.log(cart);
+cart.print();
